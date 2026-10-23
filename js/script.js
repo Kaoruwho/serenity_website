@@ -126,3 +126,47 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     history.replaceState(null, "", targetId);
   });
 });
+
+/* =====================================
+   SERENITY CONTACT FORM - FORMSPREE
+===================================== */
+
+const inquiryForm = document.getElementById("inquiryForm");
+const inquiryStatus = document.getElementById("inquiryStatus");
+
+if (inquiryForm && inquiryStatus) {
+  inquiryForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const submitButton = inquiryForm.querySelector('button[type="submit"]');
+
+    submitButton.disabled = true;
+    inquiryStatus.textContent = "Sending your inquiry...";
+
+    try {
+      const response = await fetch(inquiryForm.action, {
+        method: "POST",
+        body: new FormData(inquiryForm),
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Form submission failed");
+      }
+
+      inquiryStatus.textContent =
+        "Thank you for reaching out. Your inquiry has been sent successfully.";
+
+      inquiryForm.reset();
+
+    } catch (error) {
+      inquiryStatus.textContent =
+        "Your message could not be sent. Please try again.";
+
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+}

@@ -186,7 +186,7 @@
           <h3>Send an inquiry</h3>
           <p>Leave your contact details and a brief message. A working submission service will be connected before launch.</p>
           <!-- Not connected yet; disabled submit prevents misleading users. -->
-          <form class="inquiry-form" id="inquiryForm">
+          <form class="inquiry-form" id="inquiryForm" action="https://formspree.io/f/mpppavdk" method="POST">
             <div class="form-field">
               <label for="inquiryName">Your name <span aria-hidden="true">*</span></label>
               <input id="inquiryName" name="name" autocomplete="name" required placeholder="Full name">
@@ -212,7 +212,7 @@
               <textarea id="inquiryMessage" name="message" rows="4" placeholder="How may we assist you?"></textarea>
             </div>
             <p class="form-note">Please avoid sharing sensitive personal or medical information through this form.</p>
-            <button class="button button--primary" type="submit" disabled>Send Inquiry <span aria-hidden="true">↗</span></button>
+            <button class="button button--primary" type="submit">Send Inquiry <span aria-hidden="true">↗</span></button>
             <p class="form-status" id="inquiryStatus" role="status" aria-live="polite">Inquiry submissions will be enabled once the website is connected to a form service.</p>
           </form>
         </div>
