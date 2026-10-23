@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#243c78">
+  <meta name="description" content="Serenity Chapel and Mortuary Care Services — compassionate chapel, memorial and funeral arrangements. Connect with our team for personal assistance.">
+  <title>Marikina Serenity</title>
+
+  <!-- Elegant editorial typography and responsive styling -->
+  <link rel="icon" type="image/png" href="images/serenity_logo_square.png">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- 00 | Direct assistance: enter verified phone details before launch. -->
+  <div class="assistance-strip" aria-label="Quick assistance">
+    <div class="container assistance-strip__inner">
+      <p>Need to speak with someone about funeral arrangements?</p>
+      <a href="#contact" class="assistance-strip__link">Contact our team <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+
+  <!-- Floating-style header, visually positioned during CSS stage. -->
+  <header class="site-header" id="top">
+    <div class="container header-shell">
+      <a class="site-brand" href="#home" aria-label="Serenity homepage">
+        <img src="images/serenity-logo.jpg" alt="Serenity Chapel and Mortuary Care Services logo" width="1012" height="282">
+      </a>
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="#about">Our Promise</a>
+        <a href="#services">Services</a>
+        <a href="#facilities">Our Chapels</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a class="header-assistance" href="#contact">Speak With Our Team <span aria-hidden="true">↗</span></a>
+
+      <!-- Accessible mobile navigation; also works without JavaScript. -->
+      <details class="mobile-navigation">
+        <summary aria-label="Open navigation menu">Menu <span aria-hidden="true">☰</span></summary>
+        <nav aria-label="Mobile navigation">
+          <a href="#about" style="text-align: right;">Our Promise</a>
+          <a href="#services" style="text-align: right;">Services</a>
+          <a href="#facilities" style="text-align: right;">Our Chapels</a>
+          <a href="#contact">Contact Serenity</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- 01 | Cinematic hero: full-bleed photo + overlapping editorial title. -->
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero__media" role="img" aria-label="Serenity chapel interior">
+      </div>
+      <div class="container hero__content-shell">
+        <div class="hero__content">
+          <p class="eyebrow">Compassionate memorial care</p>
+          <h1 id="hero-title">Every farewell deserves to be <em>meaningful.</em></h1>
+          <p class="hero__description">Thoughtful chapel, mortuary, and memorial arrangements, with the care and attention every family deserves.</p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#services">Explore Our Services <span aria-hidden="true">↗</span></a>
+            <a class="text-link" href="#contact">Speak With Our Team <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <a class="circle-link hero__scroll" href="#services" aria-label="Jump to our services"><span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <!-- 02 | Intro: intentionally asymmetric, with offset small still-life image. -->
+    <section class="promise section" id="about" aria-labelledby="promise-title">
+      <div class="container promise__layout">
+        <div class="promise__editorial">
+          <p class="section-index">01 / Our Promise</p>
+          <h2 id="promise-title">A quiet place for life's most meaningful goodbyes.</h2>
+          <p>At Serenity, we believe every farewell deserves thoughtful attention and a personal touch. We are here to listen, understand, and help families explore arrangements with dignity and care.</p>
+        </div>
+        <div class="promise__aside">
+          <div class="image-placeholder promise__image" role="img" aria-label="Reserved space for a quiet floral detail photograph">
+            <span>Illustrative florals</span>
+          </div>
+          <p class="promise__aside-caption">Remembered with love. Honored with care.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 | Alternating editorial services, not a conventional equal-card grid. -->
+    <section class="services section" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-heading services__heading">
+          <div>
+            <p class="section-index">02 / Services &amp; Arrangements</p>
+            <h2 id="services-title">Thoughtful care, in every detail.</h2>
+          </div>
+          <p>Explore our service categories, or contact the team to discuss options for your family.</p>
+        </div>
+
+        <!-- Entire panel is the link; no nested anchors. -->
+        <a class="service-feature service-feature--chapel" href="#contact" aria-label="Ask about chapel and viewing services">
+          <div class="service-feature__media image-placeholder" role="img" aria-label="Reserved space for a chapel viewing room photograph"><span>Illustrative interior</span></div>
+          <div class="service-feature__body">
+            <span class="service-feature__number">01 / Chapel &amp; Viewing</span>
+            <div class="service-feature__copy">
+              <h3>A space for remembrance.</h3>
+              <p>Learn about chapel and viewing arrangements for gathering, reflection, and honoring a loved one.</p>
+            </div>
+            <span class="circle-link service-feature__arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+
+        <a class="service-feature service-feature--flowers service-feature--reverse" href="#contact" aria-label="Ask about floral arrangements">
+          <div class="service-feature__media image-placeholder" role="img" aria-label="Reserved space for Serenity floral arrangements"><span>Illustrative florals</span></div>
+          <div class="service-feature__body">
+            <span class="service-feature__number">02 / Floral Arrangements</span>
+            <div class="service-feature__copy">
+              <h3>A tribute expressed beautifully.</h3>
+              <p>Thoughtful floral options to help express remembrance, appreciation, and sympathy.</p>
+            </div>
+            <span class="circle-link service-feature__arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+
+        <div class="service-list" aria-label="Additional service categories">
+          <a class="service-list__item" href="#contact" aria-label="Ask about caskets and memorial products">
+            <span class="service-list__number">03</span><h3>Caskets &amp; Memorial Products</h3><span aria-hidden="true">↗</span>
+          </a>
+          <a class="service-list__item" href="#contact" aria-label="Ask about mortuary care">
+            <span class="service-list__number">04</span><h3>Mortuary Care</h3><span aria-hidden="true">↗</span>
+          </a>
+          <a class="service-list__item" href="#contact" aria-label="Ask about funeral coordination">
+            <span class="service-list__number">05</span><h3>Funeral Coordination</h3><span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <p class="content-note">Preview content: service offerings and photography must be confirmed with Serenity before publication.</p>
+      </div>
+    </section>
+
+    <!-- 04 | Immersive photo composition with offset secondary photographs. -->
+    <section class="facilities section" id="facilities" aria-labelledby="facilities-title">
+      <div class="container">
+        <div class="facilities__intro">
+          <p class="section-index">03 / Chapel &amp; Facilities</p>
+          <h2 id="facilities-title">Spaces designed for peace.</h2>
+          <p>A preview of the calm, welcoming atmosphere we envision. Actual Serenity facility photographs will be added once available.</p>
+        </div>
+        <div class="facilities__composition">
+          <div class="image-placeholder facilities__main-image" role="img" aria-label="Reserved space for Serenity's primary chapel photograph"><span>Illustrative interior</span></div>
+          <div class="image-placeholder facilities__detail-image" role="img" aria-label="Reserved space for chapel interior detail photograph"><span>Illustrative detail</span></div>
+          <div class="image-placeholder facilities__secondary-image" role="img" aria-label="Reserved space for another Serenity facility photograph"><span>Illustrative interior</span></div>
+        </div>
+        <div class="facilities__bottom">
+          <p>Discover the spaces and care behind Serenity.</p>
+          <a class="text-link" href="#contact">Ask About Our Facilities <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 06 | Contact hub emphasizes real people before an optional inquiry form. -->
+    <section class="contact section" id="contact" aria-labelledby="contact-title">
+      <div class="container contact__layout">
+        <div class="contact__intro">
+          <p class="section-index">04 / Contact &amp; Personal Assistance</p>
+          <h2 id="contact-title">We're here to listen.</h2>
+          <p>Questions about services, chapel arrangements, or special requests? Reach out so we can discuss them personally.</p>
+          <div class="contact__details">
+            <div class="contact__detail">
+              <span class="contact__icon" aria-hidden="true">☎</span>
+              <div><h3>Call Serenity</h3><p>Contact number to be confirmed</p></div>
+            </div>
+            <div class="contact__detail">
+              <span class="contact__icon" aria-hidden="true">⌖</span>
+              <div><h3>Visit Our Chapel</h3><p>Full address to be confirmed</p></div>
+            </div>
+            <div class="contact__detail">
+              <span class="contact__icon" aria-hidden="true">✉</span>
+              <div><h3>Email Us</h3><p>Email address to be confirmed</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact__inquiry">
+          <p class="eyebrow">Prefer to write?</p>
+          <h3>Send an inquiry</h3>
+          <p>Leave your contact details and a brief message. A working submission service will be connected before launch.</p>
+          <!-- Not connected yet; disabled submit prevents misleading users. -->
+          <form class="inquiry-form" id="inquiryForm">
+            <div class="form-field">
+              <label for="inquiryName">Your name <span aria-hidden="true">*</span></label>
+              <input id="inquiryName" name="name" autocomplete="name" required placeholder="Full name">
+            </div>
+            <div class="form-field">
+              <label for="inquiryContact">Phone or email <span aria-hidden="true">*</span></label>
+              <input id="inquiryContact" name="contact" required placeholder="Your preferred contact detail">
+            </div>
+            <div class="form-field">
+              <label for="inquiryService">Service of interest</label>
+              <select id="inquiryService" name="service">
+                <option value="">Please select (optional)</option>
+                <option>Chapel &amp; Viewing</option>
+                <option>Floral Arrangements</option>
+                <option>Caskets &amp; Memorial Products</option>
+                <option>Mortuary Care</option>
+                <option>Funeral Coordination</option>
+                <option>General Inquiry</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="inquiryMessage">Message (optional)</label>
+              <textarea id="inquiryMessage" name="message" rows="4" placeholder="How may we assist you?"></textarea>
+            </div>
+            <p class="form-note">Please avoid sharing sensitive personal or medical information through this form.</p>
+            <button class="button button--primary" type="submit" disabled>Send Inquiry <span aria-hidden="true">↗</span></button>
+            <p class="form-status" id="inquiryStatus" role="status" aria-live="polite">Inquiry submissions will be enabled once the website is connected to a form service.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 07 | Simple footer; real contact details replace placeholders later. -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer__upper">
+        <div class="footer__brand">
+          <img src="images/serenity-logo.jpg" alt="Serenity Chapel and Mortuary Care Services" width="1012" height="282">
+          <p>Thoughtful arrangements. Compassionate care. Meaningful remembrance.</p>
+        </div>
+        <nav class="footer__nav" aria-label="Footer navigation">
+          <a href="#services">Services</a>
+          <a href="#facilities">Our Chapels</a>
+          <a href="#about">Our Promise</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+      <div class="footer__lower">
+        <span>© <span id="copyright-year">2026</span> Serenity Chapel and Mortuary Care Services.</span>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
