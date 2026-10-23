@@ -128,42 +128,57 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 });
 
 /* =====================================
-   SERENITY CONTACT FORM - FORMSPREE
+   SERENITY INQUIRY FORM - WEB3FORMS
 ===================================== */
 
 const inquiryForm = document.getElementById("inquiryForm");
 const inquiryStatus = document.getElementById("inquiryStatus");
 
 if (inquiryForm && inquiryStatus) {
+  const submitButton = inquiryForm.querySelector(
+    'button[type="submit"]'
+  );
+
   inquiryForm.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const submitButton = inquiryForm.querySelector('button[type="submit"]');
+    if (!inquiryForm.reportValidity()) return;
 
     submitButton.disabled = true;
     inquiryStatus.textContent = "Sending your inquiry...";
 
     try {
-      const response = await fetch(inquiryForm.action, {
-        method: "POST",
-        body: new FormData(inquiryForm),
-        headers: {
-          Accept: "application/json"
-        }
-      });
+      const formData = new FormData(inquiryForm);
 
-      if (!response.ok) {
-        throw new Error("Form submission failed");
+      const response = await fetch(
+        "https://api.web3forms.com/submit",
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            Accept: "application/json"
+          }
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok || result.success !== true) {
+        throw new Error(
+          result.message || "Submission failed"
+        );
       }
 
       inquiryStatus.textContent =
-        "Thank you for reaching out. Your inquiry has been sent successfully.";
+        "Thank you! Your inquiry has been sent successfully.";
 
       inquiryForm.reset();
 
     } catch (error) {
+      console.error("Web3Forms error:", error);
+
       inquiryStatus.textContent =
-        "Your message could not be sent. Please try again.";
+        "Sorry, we couldn't send your inquiry. Please try again.";
 
     } finally {
       submitButton.disabled = false;

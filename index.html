@@ -186,7 +186,34 @@
           <h3>Send an inquiry</h3>
           <p>Leave your contact details and a brief message. A working submission service will be connected before launch.</p>
           <!-- Not connected yet; disabled submit prevents misleading users. -->
-          <form class="inquiry-form" id="inquiryForm" action="https://formspree.io/f/mpppavdk" method="POST">
+          <form class="inquiry-form" id="inquiryForm" action="https://api.web3forms.com/submit" method="POST">
+                <!-- Web3Forms configuration -->
+                <input
+                  type="hidden"
+                  name="access_key"
+                  value="4d1479fe-93b6-4999-947d-2768f19aaf1b"
+                >
+
+                <input
+                  type="hidden"
+                  name="from_name"
+                  value="Serenity Website Inquiries"
+                >
+
+                <input
+                  type="hidden"
+                  name="subject"
+                  value="[SERENITY] New Website Inquiry"
+                >
+
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  style="display: none;"
+                  tabindex="-1"
+                  autocomplete="off"
+                >
+
             <div class="form-field">
               <label for="inquiryName">Your name <span aria-hidden="true">*</span></label>
               <input id="inquiryName" name="name" autocomplete="name" required placeholder="Full name">
