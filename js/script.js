@@ -14,7 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Gentle one-time reveals; respects device reduced-motion preferences.
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduceMotion && 'IntersectionObserver' in window) {
-    const elements = document.querySelectorAll('.promise__editorial,.promise__aside,.section-heading,.service-feature,.service-list,.facilities__intro,.facilities__composition,.facilities__bottom,.human-care__inner,.contact__intro,.contact__inquiry');
+  const elements = document.querySelectorAll(
+    ".promise__editorial, " +
+    ".promise__aside, " +
+    ".section-heading, " +
+    ".service-accordion, " +
+    ".contact__intro, " +
+    ".contact__inquiry"
+  );  
     elements.forEach(el => el.classList.add('reveal'));
     document.body.classList.add('js-motion');
     const revealObserver = new IntersectionObserver(entries => {
@@ -28,21 +35,87 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.forEach(el => revealObserver.observe(el));
   }
 
-  // Preselect a service when navigating to the inquiry section from a service.
-  const serviceChoice = document.getElementById('inquiryService');
-  const serviceLinks = {
-    'service-feature--chapel': 'Chapel & Viewing',
-    'service-feature--flowers': 'Floral Arrangements'
-  };
-  document.querySelectorAll('.service-feature, .service-list__item').forEach(link => {
-    link.addEventListener('click', () => {
-      if (!serviceChoice) return;
-      let value = '';
-      for (const [cls, name] of Object.entries(serviceLinks)) if (link.classList.contains(cls)) value = name;
-      if (!value) value = link.querySelector('h3')?.textContent.trim() || '';
-      if (Array.from(serviceChoice.options).some(option => option.value === value)) serviceChoice.value = value;
-    });
+const servicePanels = Array.from(
+  document.querySelectorAll(".service-panel")
+);
+
+const canHover = window.matchMedia(
+  "(hover: hover) and (pointer: fine)"
+);
+
+let suppressedPanel = null;
+
+function setActivePanel(activePanel) {
+  servicePanels.forEach((panel) => {
+    const isActive = panel === activePanel;
+    const toggle = panel.querySelector(".service-panel__toggle");
+
+    panel.classList.toggle("is-active", isActive);
+    toggle.setAttribute("aria-expanded", String(isActive));
   });
+}
+
+servicePanels.forEach((panel) => {
+  const toggle = panel.querySelector(".service-panel__toggle");
+
+  // Expand on hover for mouse/trackpad users.
+  panel.addEventListener("pointerenter", (event) => {
+    if (!canHover.matches || event.pointerType !== "mouse") return;
+
+    if (suppressedPanel === panel) return;
+
+    setActivePanel(panel);
+  });
+
+  // Collapse when the pointer leaves the panel.
+  panel.addEventListener("pointerleave", (event) => {
+    if (!canHover.matches || event.pointerType !== "mouse") return;
+
+    if (suppressedPanel === panel) {
+      suppressedPanel = null;
+    }
+
+    if (panel.classList.contains("is-active")) {
+      setActivePanel(null);
+    }
+  });
+
+  // Click to toggle. Closing suppresses re-opening
+  // until the mouse leaves the panel.
+  toggle.addEventListener("click", () => {
+    const isActive = panel.classList.contains("is-active");
+
+    if (isActive) {
+      suppressedPanel = panel;
+      setActivePanel(null);
+    } else {
+      suppressedPanel = null;
+      setActivePanel(panel);
+    }
+  });
+});
+
+/* =====================================
+   PRESELECT SERVICE IN INQUIRY FORM
+===================================== */
+
+const serviceChoice = document.getElementById("inquiryService");
+
+document.querySelectorAll(".service-panel__cta").forEach((link) => {
+  link.addEventListener("click", () => {
+    if (!serviceChoice) return;
+
+    const selectedService = link.dataset.service;
+
+    const matchingOption = Array.from(serviceChoice.options).find(
+      (option) => option.value === selectedService
+    );
+
+    if (matchingOption) {
+      serviceChoice.value = selectedService;
+    }
+  });
+});
 });
 
 /* =====================================
@@ -72,22 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set the correct state when loading the page
     updateArrowVisibility();
-
-    floatingArrow.addEventListener("click", (event) => {
-    event.preventDefault();
-
-    const servicesTop =
-      servicesSection.getBoundingClientRect().top +
-      window.scrollY;
-
-    // Scroll 40px farther into Services
-    const extraScroll = 100;
-
-    window.scrollTo({
-      top: servicesTop + extraScroll,
-      behavior: "smooth"
-    });
-  });
 });
 
 /* =====================================
@@ -112,13 +169,11 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     // Scroll slightly into the section
     const isTopLink = targetId === "#top" || targetId === "#home";
 
-    // Other sections scroll slightly farther into their content
+    // Other destinations scroll slightly into the section.
     const offset = isTopLink ? 0 : 50;
 
-    
-
     window.scrollTo({
-      top: Math.max(0, sectionTop + offset),
+      top: isTopLink ? 0 : Math.max(0, sectionTop + offset),
       behavior: "smooth"
     });
 
