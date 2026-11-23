@@ -12,46 +12,376 @@ document.addEventListener('DOMContentLoaded', () => {
   if (year) year.textContent = new Date().getFullYear();
 
   // Gentle one-time reveals; respects device reduced-motion preferences.
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduceMotion && 'IntersectionObserver' in window) {
-  const elements = document.querySelectorAll(
-    ".promise__editorial, " +
-    ".promise__aside, " +
-    ".section-heading, " +
-    ".service-accordion, " +
-    ".contact__intro, " +
+  /* =====================================
+   STAGGERED SCROLL REVEAL
+===================================== */
+
+const reduceMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
+
+if (!reduceMotion && "IntersectionObserver" in window) {
+
+  const revealGroups = [
+    ".promise__editorial > *",
+    ".promise__aside > *",
+    ".section-heading > div > *",
+    ".section-heading > p",
+    ".service-accordion > .service-panel",
+    ".credentials__copy > *",
+    ".credentials__action",
+    ".contact__intro > *",
     ".contact__inquiry"
-  );  
-    elements.forEach(el => el.classList.add('reveal'));
-    document.body.classList.add('js-motion');
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
+  ];
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
+          entry.target.classList.add("is-visible");
           revealObserver.unobserve(entry.target);
         }
       });
-    }, {threshold: 0.07, rootMargin: '0px 0px 30px 0px'});
-    elements.forEach(el => revealObserver.observe(el));
-  }
+    },
+    {
+      threshold: 0.07,
+      rootMargin: "0px 0px 30px 0px"
+    }
+  );
 
+  revealGroups.forEach((selector) => {
+    document.querySelectorAll(selector).forEach((el, index) => {
+
+      el.classList.add("reveal");
+
+      el.style.setProperty(
+        "--reveal-delay",
+        `${Math.min(index * 0.15, 0.6)}s`
+      );
+
+      revealObserver.observe(el);
+    });
+  });
+
+  document.body.classList.add("js-motion");
+}
 
 /* =====================================
-   SERVICES ACCORDION — CLICK TO EXPAND
+   SERVICES ACCORDION + CASKET GALLERY
 ===================================== */
 
 const servicePanels = document.querySelectorAll(".service-panel");
 
+const casketGallery = document.getElementById("casketGallery");
+const casketGalleryImage = document.getElementById(
+  "casketGalleryImage"
+);
+const casketGalleryPlaceholder = document.getElementById(
+  "casketGalleryPlaceholder"
+);
+const casketGalleryTitle = document.getElementById(
+  "casketGalleryTitle"
+);
+const casketGalleryEyebrow = document.getElementById(
+  "casketGalleryEyebrow"
+);
+const casketGalleryPlaceholderText = document.getElementById(
+  "casketGalleryPlaceholderText"
+);
+const casketGalleryCounter = document.getElementById(
+  "casketGalleryCounter"
+);
+
+const casketGalleryPrev = document.getElementById(
+  "casketGalleryPrev"
+);
+const casketGalleryNext = document.getElementById(
+  "casketGalleryNext"
+);
+const closeCasketGallery = document.getElementById(
+  "closeCasketGallery"
+);
+
+const serviceGalleries = {
+  chapel: {
+    service: "Chapel & Viewing",
+    title: "Chapel & Viewing",   
+    eyebrow: "SERENITY / CHAPEL & VIEWING",
+    placeholder: "Our chapel and viewing spaces will be displayed here.",
+    items: [
+      {
+        title: "Main Viewing Chapel",
+        image: "images/gallery/chapel/chapel-1.jpg"
+      },
+      {
+        title: "Interior Chapel",
+        image: "images/gallery/chapel/chapel-2.jpg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/chapel/chapel-3.jpg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/chapel/chapel-4.jpg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/chapel/chapel-5.jpg"
+      }
+      
+    ]
+  },
+
+  flowers: {
+    service: "Floral Arrangements",
+    title: "Floral Arrangements",
+    eyebrow: "SERENITY / FLORAL COLLECTION",
+    placeholder: "Our floral arrangements will be displayed here.",
+    items: [
+      {
+        title: "Main Viewing Chapel",
+        image: "images/gallery/flowers/flower-1.jpeg"
+      },
+      {
+        title: "Interior Chapel",
+        image: "images/gallery/flowers/flower-2.jpeg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/flowers/flower-3.jpeg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/flowers/flower-4.jpeg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/flowers/flower-5.jpeg"
+      }
+    ]
+  },
+
+  caskets: {
+    service: "Caskets & Memorial Products",
+    title: "Casket Collection",
+    eyebrow: "SERENITY / CASKET COLLECTION",
+    placeholder: "Our casket photographs will be displayed here.",
+    items: [
+      {
+        title: "Main Viewing Chapel",
+        image: "images/gallery/caskets/casket-1.jpg"
+      },
+      {
+        title: "Interior Chapel",
+        image: "images/gallery/caskets/casket-2.jpg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/caskets/casket-3.jpg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/caskets/casket-4.jpg"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/caskets/casket-5.jpg"
+      }
+    ]
+  },
+
+  care: {
+    service: "Mortuary Care",
+    title: "Mortuary Care",
+    eyebrow: "SERENITY / MORTUARY CARE",
+    placeholder: "Our mortuary care facilities and services will be displayed here.",
+    items: [
+      {
+        title: "Main Viewing Chapel",
+        image: "images/gallery/mortuary/chapel-1.png"
+      },
+      {
+        title: "Interior Chapel",
+        image: "images/gallery/mortuary/chapel-2.png"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/mortuary/chapel-3.png"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/mortuary/chapel-4.png"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/mortuary/chapel-5.jpeg"
+      }
+    ]
+  },
+
+  coordination: {
+    service: "Funeral Coordination",
+    title: "Funeral Coordination",
+    eyebrow: "SERENITY / FUNERAL COORDINATION",
+    placeholder: "Our funeral coordination services will be displayed here.",
+    items: [
+      {
+        title: "Main Viewing Chapel",
+        image: "images/gallery/coordination/chapel-1.png"
+      },
+      {
+        title: "Interior Chapel",
+        image: "images/gallery/coordination/chapel-2.png"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/coordination/chapel-3.png"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/coordination/chapel-4.png"
+      },
+      {
+        title: "Viewing Area",
+        image: "images/gallery/coordination/chapel-5.jpeg"
+      }
+    ]
+  }
+};
+
+let activeGallery = null;
+let currentCasketIndex = 0;
+let galleryCloseTimer = null;
+
+function showCasketItem(index) {
+  if (!activeGallery) return;
+
+  const items = activeGallery.items;
+
+  if (items.length === 0) {
+    casketGalleryImage.hidden = true;
+    casketGalleryImage.removeAttribute("src");
+
+    casketGalleryPlaceholder.hidden = false;
+
+    casketGalleryPlaceholderText.textContent =
+      activeGallery.placeholder;
+
+    casketGalleryTitle.textContent =
+      activeGallery.title;
+
+    casketGalleryCounter.textContent = "0 / 0";
+
+    casketGalleryPrev.disabled = true;
+    casketGalleryNext.disabled = true;
+
+    return;
+  }
+
+  currentCasketIndex =
+    (index + items.length) % items.length;
+
+  const item = items[currentCasketIndex];
+
+  casketGalleryTitle.textContent = item.title;
+
+  casketGalleryCounter.textContent =
+    `${currentCasketIndex + 1} / ${items.length}`;
+
+  casketGalleryPrev.disabled = items.length <= 1;
+  casketGalleryNext.disabled = items.length <= 1;
+
+  casketGalleryImage.hidden = true;
+  casketGalleryPlaceholder.hidden = false;
+
+  casketGalleryPlaceholderText.textContent =
+    activeGallery.placeholder;
+
+  casketGalleryImage.onload = () => {
+    casketGalleryImage.hidden = false;
+    casketGalleryPlaceholder.hidden = true;
+  };
+
+  casketGalleryImage.onerror = () => {
+    casketGalleryImage.hidden = true;
+    casketGalleryPlaceholder.hidden = false;
+
+    casketGalleryPlaceholderText.textContent =
+      "This photograph is currently unavailable.";
+  };
+
+  casketGalleryImage.src = item.image;
+}
+
+function openCasketGallery(category) {
+  activeGallery = serviceGalleries[category];
+
+  if (!activeGallery) return;
+
+  casketGalleryEyebrow.textContent =
+    activeGallery.eyebrow;
+
+  const inquiryLink = casketGallery.querySelector(
+    ".casket-gallery__inquire"
+  );
+
+  inquiryLink.dataset.service = activeGallery.service;
+
+  showCasketItem(0);
+
+  // Reset any previous closing animation.
+  clearTimeout(galleryCloseTimer);
+  galleryCloseTimer = null;
+  casketGallery.classList.remove("is-closing");
+
+  casketGallery.showModal();
+}
+
+function closeGallery() {
+  if (!casketGallery.open) return;
+  if (casketGallery.classList.contains("is-closing")) return;
+
+  casketGallery.classList.add("is-closing");
+
+  galleryCloseTimer = setTimeout(() => {
+    casketGallery.close();
+    casketGallery.classList.remove("is-closing");
+    galleryCloseTimer = null;
+  }, 260);
+}
+
+casketGallery.addEventListener("cancel", (event) => {
+  event.preventDefault();
+  closeGallery();
+});
+
+// Close button.
+closeCasketGallery.addEventListener("click", () => {
+  closeGallery();
+});
+
+// Close the gallery when clicking the inquiry link.
+const casketGalleryInquire = casketGallery.querySelector(
+  ".casket-gallery__inquire"
+);
+
+casketGalleryInquire.addEventListener("click", () => {
+  closeGallery();
+});
+
+// All service categories open the shared gallery.
 servicePanels.forEach((panel) => {
-  const toggle = panel.querySelector(".service-panel__toggle");
+  const toggle = panel.querySelector(
+    ".service-panel__toggle"
+  );
 
   toggle.addEventListener("click", () => {
-    const wasOpen = panel.classList.contains("is-active");
+    const category = toggle.dataset.gallery;
 
-    // Close all panels.
+    if (!category || !serviceGalleries[category]) return;
+
     servicePanels.forEach((otherPanel) => {
-      otherPanel.classList.remove("is-active");
-
       const otherToggle = otherPanel.querySelector(
         ".service-panel__toggle"
       );
@@ -59,14 +389,67 @@ servicePanels.forEach((panel) => {
       otherToggle.setAttribute("aria-expanded", "false");
     });
 
-    // Open the selected panel only if it was previously closed.
-    if (!wasOpen) {
-      panel.classList.add("is-active");
-      toggle.setAttribute("aria-expanded", "true");
-    }
+    openCasketGallery(category);
+
+    toggle.setAttribute("aria-expanded", "true");
   });
 });
 
+// Close button.
+casketGallery.addEventListener("close", () => {
+  servicePanels.forEach((panel) => {
+    const toggle = panel.querySelector(
+      ".service-panel__toggle"
+    );
+
+    toggle.setAttribute("aria-expanded", "false");
+  });
+});
+
+// Previous and next navigation.
+casketGalleryPrev.addEventListener("click", () => {
+  showCasketItem(currentCasketIndex - 1);
+});
+
+casketGalleryNext.addEventListener("click", () => {
+  showCasketItem(currentCasketIndex + 1);
+});
+
+// Close when clicking outside the visible gallery content.
+casketGallery.addEventListener("click", (event) => {
+  const galleryContent = casketGallery.querySelector(
+    ".casket-gallery__content"
+  );
+
+  const bounds = galleryContent.getBoundingClientRect();
+
+  const clickedInsideContent =
+    event.clientX >= bounds.left &&
+    event.clientX <= bounds.right &&
+    event.clientY >= bounds.top &&
+    event.clientY <= bounds.bottom;
+
+  const clickedGalleryControl = event.target.closest(
+    ".casket-gallery__close, .casket-gallery__arrow"
+  );
+
+  if (!clickedInsideContent && !clickedGalleryControl) {
+    closeGallery();
+  }
+});
+
+// Keyboard navigation.
+document.addEventListener("keydown", (event) => {
+  if (!casketGallery.open) return;
+
+  if (event.key === "ArrowLeft") {
+    showCasketItem(currentCasketIndex - 1);
+  }
+
+  if (event.key === "ArrowRight") {
+    showCasketItem(currentCasketIndex + 1);
+  }
+});
 
 /* =====================================
    PRESELECT SERVICE IN INQUIRY FORM
@@ -74,21 +457,22 @@ servicePanels.forEach((panel) => {
 
 const serviceChoice = document.getElementById("inquiryService");
 
-document.querySelectorAll(".service-panel__cta").forEach((link) => {
+document.querySelectorAll(
+  ".service-panel__cta, .casket-gallery__inquire"
+).forEach((link) => {
   link.addEventListener("click", () => {
     if (!serviceChoice) return;
 
     const selectedService = link.dataset.service;
 
     const matchingOption = Array.from(serviceChoice.options).find(
-      (option) => option.value === selectedService
+      (option) => option.textContent.trim() === selectedService
     );
 
     if (matchingOption) {
-      serviceChoice.value = selectedService;
+      serviceChoice.value = matchingOption.value;
     }
   });
-});
 });
 
 /* =====================================
@@ -130,7 +514,11 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
 
     if (!targetId || targetId === "#") return;
 
-    const target = document.querySelector(targetId);
+    if (
+      !targetId ||
+      targetId === "#" ||
+      !targetId.startsWith("#")
+    ) return;
 
     if (!target) return;
 
@@ -200,10 +588,21 @@ if (inquiryForm && inquiryStatus) {
       inquiryStatus.textContent =
         "Thank you! Your inquiry has been sent successfully.";
 
+      showInquiryToast(
+        "success",
+        "Inquiry sent successfully",
+        "Thank you for reaching out. Our team will be in touch."
+      );
       inquiryForm.reset();
 
     } catch (error) {
       console.error("Web3Forms error:", error);
+
+      showInquiryToast(
+        "error",
+        "Unable to send inquiry",
+        "Something went wrong. Please try again."
+      );
 
       inquiryStatus.textContent =
         "Sorry, we couldn't send your inquiry. Please try again.";
@@ -217,8 +616,7 @@ if (inquiryForm && inquiryStatus) {
 /* =====================================
    OUR CREDENTIALS DOCUMENT VIEWER
 ===================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
+{
   const modal = document.getElementById("credentialsModal");
   const openButton = document.getElementById("openCredentials");
   const closeButton = document.getElementById("closeCredentials");
@@ -338,25 +736,21 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Native dialog already supports Escape to close.
-});
+}
+
 
 
 /* =====================================
    ANIMATED SECTION DIVIDERS
 ===================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
-  const dividers = document.querySelectorAll(
-    ".section-divider"
-  );
+const dividers = document.querySelectorAll(".section-divider");
 
-  const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+const reducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
 
-  if (reducedMotion || !("IntersectionObserver" in window)) {
-    return;
-  }
+if (!reducedMotion && "IntersectionObserver" in window) {
 
   const dividerObserver = new IntersectionObserver(
     (entries) => {
@@ -376,4 +770,37 @@ document.addEventListener("DOMContentLoaded", () => {
     divider.classList.add("is-animated");
     dividerObserver.observe(divider);
   });
+
+}
+
+/* =====================================
+   INQUIRY TOAST NOTIFICATION
+===================================== */
+
+let toastTimer;
+
+function showInquiryToast(type, title, message) {
+  const toast = document.getElementById("inquiryToast");
+
+  clearTimeout(toastTimer);
+
+  document.getElementById("toastTitle").textContent = title;
+  document.getElementById("toastMessage").textContent = message;
+  document.getElementById("toastIcon").textContent =
+    type === "success" ? "✓" : "!";
+
+  toast.classList.remove("is-success", "is-error");
+  toast.classList.add(`is-${type}`, "is-visible");
+
+  toastTimer = setTimeout(() => {
+    toast.classList.remove("is-visible");
+  }, 5000);
+}
+
+document.getElementById("toastClose").addEventListener("click", () => {
+  clearTimeout(toastTimer);
+
+  document.getElementById("inquiryToast")
+    .classList.remove("is-visible");
 });
+})

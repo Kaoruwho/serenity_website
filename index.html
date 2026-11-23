@@ -107,101 +107,67 @@
           <!-- 01 Chapel & Viewing -->
           <article class="service-panel service-panel--chapel">
             <button class="service-panel__toggle" type="button"
-                    aria-expanded="false" aria-controls="service-content-1">
+                    aria-expanded="false"
+                    aria-haspopup="dialog"
+                    aria-controls="casketGallery"
+                    data-gallery="chapel">
               <span class="service-panel__number">01</span>
               <span class="service-panel__title">Chapel &amp; Viewing</span>
               <span class="service-panel__symbol" aria-hidden="true">+</span>
             </button>
-            <div class="service-panel__details" id="service-content-1">
-              <div class="service-panel__details-inner">
-                <h3>A space for remembrance.</h3>
-                <p>Learn about chapel and viewing arrangements for gathering, reflection, and honoring a loved one.</p>
-                <a class="service-panel__cta" href="#contact"
-                  data-service="Chapel &amp; Viewing">
-                  Inquire About This Service <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </div>
           </article>
 
           <!-- 02 Floral Arrangements -->
           <article class="service-panel service-panel--flowers">
             <button class="service-panel__toggle" type="button"
-                    aria-expanded="false" aria-controls="service-content-2">
+                    aria-expanded="false"
+                    aria-haspopup="dialog"
+                    aria-controls="casketGallery"
+                    data-gallery="flowers">
               <span class="service-panel__number">02</span>
               <span class="service-panel__title">Floral Arrangements</span>
               <span class="service-panel__symbol" aria-hidden="true">+</span>
             </button>
-            <div class="service-panel__details" id="service-content-2">
-              <div class="service-panel__details-inner">
-                <h3>A tribute expressed beautifully.</h3>
-                <p>Thoughtful floral options to help express remembrance, appreciation, and sympathy.</p>
-                <a class="service-panel__cta" href="#contact"
-                  data-service="Floral Arrangements">
-                  Inquire About This Service <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </div>
           </article>
 
           <!-- 03 Caskets & Memorial Products -->
           <article class="service-panel service-panel--caskets">
-            <button class="service-panel__toggle" type="button"
-                    aria-expanded="false" aria-controls="service-content-3">
+            <button class="service-panel__toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-haspopup="dialog"
+                    aria-controls="casketGallery"
+                    data-gallery="caskets">
               <span class="service-panel__number">03</span>
               <span class="service-panel__title">Caskets &amp; Memorial Products</span>
               <span class="service-panel__symbol" aria-hidden="true">+</span>
             </button>
-            <div class="service-panel__details" id="service-content-3">
-              <div class="service-panel__details-inner">
-                <h3>A tribute with dignity.</h3>
-                <p>Explore memorial products with thoughtful guidance from our team.</p>
-                <a class="service-panel__cta" href="#contact"
-                  data-service="Caskets &amp; Memorial Products">
-                  Inquire About This Service <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </div>
           </article>
 
-          <!-- 04 Mortuary Care -->
           <article class="service-panel service-panel--care">
-            <button class="service-panel__toggle" type="button"
-                    aria-expanded="false" aria-controls="service-content-4">
+            <button class="service-panel__toggle"
+                    type="button"
+                    aria-expanded="false"
+                    aria-haspopup="dialog"
+                    aria-controls="casketGallery"
+                    data-gallery="care">
               <span class="service-panel__number">04</span>
               <span class="service-panel__title">Mortuary Care</span>
               <span class="service-panel__symbol" aria-hidden="true">+</span>
             </button>
-            <div class="service-panel__details" id="service-content-4">
-              <div class="service-panel__details-inner">
-                <h3>Care with compassion.</h3>
-                <p>Respectful, attentive care throughout the arrangements process.</p>
-                <a class="service-panel__cta" href="#contact"
-                  data-service="Mortuary Care">
-                  Inquire About This Service <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </div>
           </article>
 
           <!-- 05 Funeral Coordination -->
           <article class="service-panel service-panel--coordination">
             <button class="service-panel__toggle" type="button"
-                    aria-expanded="false" aria-controls="service-content-5">
+                    aria-expanded="false"
+                    aria-haspopup="dialog"
+                    aria-controls="casketGallery"
+                    data-gallery="coordination">
               <span class="service-panel__number">05</span>
               <span class="service-panel__title">Funeral Coordination</span>
               <span class="service-panel__symbol" aria-hidden="true">+</span>
             </button>
-            <div class="service-panel__details" id="service-content-5">
-              <div class="service-panel__details-inner">
-                <h3>Guidance at every step.</h3>
-                <p>Personal assistance in organizing the details of a meaningful farewell.</p>
-                <a class="service-panel__cta" href="#contact"
-                  data-service="Funeral Coordination">
-                  Inquire About This Service <span aria-hidden="true">↗</span>
-                </a>
-              </div>
-            </div>
           </article>
 
         </div>
@@ -254,16 +220,62 @@
           <p>Questions about services, chapel arrangements, or special requests? Reach out so we can discuss them personally.</p>
           <div class="contact__details">
             <div class="contact__detail">
-              <span class="contact__icon" aria-hidden="true">☎</span>
-              <div><h3>Call Serenity</h3><p>Contact number to be confirmed</p></div>
+              <span class="contact__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+                          19.8 19.8 0 0 1-8.63-3.07
+                          19.5 19.5 0 0 1-6-6
+                          A19.8 19.8 0 0 1 2.12 4.2
+                          2 2 0 0 1 4.11 2h3
+                          a2 2 0 0 1 2 1.72
+                          c.13.96.36 1.9.69 2.81
+                          a2 2 0 0 1-.45 2.11L8.08 9.91
+                          a16 16 0 0 0 6 6l1.27-1.27
+                          a2 2 0 0 1 2.11-.45
+                          c.91.33 1.85.56 2.81.69
+                          A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </span>
+              <div><h3>Call Serenity</h3><p>(0931) 047 6196  | (02) 8561 1943</p></div>
             </div>
             <div class="contact__detail">
-              <span class="contact__icon" aria-hidden="true">⌖</span>
-              <div><h3>Visit Our Chapel</h3><p>Full address to be confirmed</p></div>
+              <span class="contact__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                  <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+              </span>
+              <div><h3>Visit Us</h3><p>142 A Bonifacio Ave., Brgy. Tañong, Marikina City</p></div>
             </div>
             <div class="contact__detail">
-              <span class="contact__icon" aria-hidden="true">✉</span>
-              <div><h3>Email Us</h3><p>Email address to be confirmed</p></div>
+              <span class="contact__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    width="24" height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+                  <rect x="2" y="4" width="20" height="16" rx="2"/>
+                  <path d="m2 6 10 7 10-7"/>
+                </svg>
+              </span>
+              <div><h3>Email Us</h3><p>marikinaserenity2026@gmail.com</p></div>
             </div>
           </div>
         </div>
@@ -356,6 +368,77 @@
     </div>
   </footer>
 
+  <!-- Casket Product Gallery -->
+  <dialog class="casket-gallery"
+          id="casketGallery"
+          aria-label="Casket collection">
+
+    <button class="casket-gallery__close"
+            id="closeCasketGallery"
+            type="button"
+            aria-label="Close casket gallery">
+      &times;
+    </button>
+
+    <button class="casket-gallery__arrow casket-gallery__arrow--prev"
+            id="casketGalleryPrev"
+            type="button"
+            aria-label="Previous casket"
+            disabled>
+      &#10094;
+    </button>
+
+    <div class="casket-gallery__content">
+
+      <div class="casket-gallery__image-stage">
+
+        <div class="casket-gallery__placeholder"
+        id="casketGalleryPlaceholder">
+          <span aria-hidden="true">▧</span>
+          <p id="casketGalleryPlaceholderText">
+            Photographs will be displayed here.
+          </p>
+          <small>Product images coming soon</small>
+        </div>
+
+        <img class="casket-gallery__image"
+            id="casketGalleryImage"
+            alt=""
+            hidden>
+
+      </div>
+
+      <div class="casket-gallery__caption">
+        <p class="casket-gallery__eyebrow"
+        id="casketGalleryEyebrow">
+          SERENITY / CASKET COLLECTION
+        </p>
+
+        <h2 id="casketGalleryTitle">Our Casket Collection</h2>
+
+        <span class="casket-gallery__counter"
+              id="casketGalleryCounter">0 / 0</span>
+      </div>
+
+      <a class="casket-gallery__inquire"
+        href="#contact"
+        data-service="Caskets &amp; Memorial Products">
+        Inquire About This Collection
+        <span aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+    <button class="casket-gallery__arrow casket-gallery__arrow--next"
+            id="casketGalleryNext"
+            type="button"
+            aria-label="Next casket"
+            disabled>
+      &#10095;
+    </button>
+
+  </dialog>
+
 <!-- Our Credentials document viewer -->
 <dialog class="credentials-modal"
         id="credentialsModal"
@@ -376,10 +459,6 @@
       &times;
     </button>
   </div>
-
-  <p class="credentials-modal__description">
-    Select a document below to view its public-facing copy.
-  </p>
 
   <div class="credentials-modal__tabs"
        aria-label="Available documents">
@@ -403,7 +482,7 @@
     <button type="button"
             class="credentials-modal__tab"
             data-doc-title="Other Documentation"
-            data-doc-src=""
+            data-doc-src="images/credentials/Permit.jpeg"
             aria-pressed="false">
       Other Documentation
     </button>
@@ -450,5 +529,21 @@
   </div>
 
 </dialog>
+<!-- Inquiry Notification -->
+<div class="inquiry-toast" id="inquiryToast"
+     role="status" aria-live="polite">
+
+  <span class="inquiry-toast__icon" id="toastIcon"></span>
+
+  <div class="inquiry-toast__content">
+    <strong id="toastTitle"></strong>
+    <p id="toastMessage"></p>
+  </div>
+
+  <button class="inquiry-toast__close"
+          id="toastClose"
+          aria-label="Close notification">×</button>
+
+</div>
 </body>
 </html>
