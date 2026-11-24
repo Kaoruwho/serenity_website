@@ -498,24 +498,17 @@ document.querySelectorAll(
 /* =====================================
    FLOATING SERVICES ARROW
 ===================================== */
-
 {
   const servicesSection = document.querySelector("#services");
   const floatingArrow = document.querySelector(".hero__scroll");
 
-  if (servicesSection && floatingArrow) {
-    const updateArrowVisibility = () => {
-      const servicesTop = servicesSection.getBoundingClientRect().top;
-
-      // Hide once the Services section reaches the screen (or is already above it)
-      floatingArrow.classList.toggle("is-hidden", servicesTop <= window.innerHeight);
-    };
-
-    window.addEventListener("scroll", updateArrowVisibility, { passive: true });
-    window.addEventListener("resize", updateArrowVisibility);
-
-    // Set the correct state when the page loads
-    updateArrowVisibility();
+  if (servicesSection && floatingArrow && "IntersectionObserver" in window) {
+    const arrowObserver = new IntersectionObserver(([entry]) => {
+      // Hide while Services is on screen, and once it has scrolled past
+      const pastServices = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      floatingArrow.classList.toggle("is-hidden", entry.isIntersecting || pastServices);
+    });
+    arrowObserver.observe(servicesSection);
   }
 }
 
