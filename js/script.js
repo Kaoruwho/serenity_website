@@ -111,23 +111,23 @@ const serviceGalleries = {
     items: [
       {
         title: "Main Viewing Chapel",
-        image: "images/gallery/chapel/chapel-1.jpg"
+        image: "images/gallery/chapel/chapel-1.webp"
       },
       {
         title: "Interior Chapel",
-        image: "images/gallery/chapel/chapel-2.jpg"
+        image: "images/gallery/chapel/chapel-2.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/chapel/chapel-3.jpg"
+        image: "images/gallery/chapel/chapel-3.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/chapel/chapel-4.jpg"
+        image: "images/gallery/chapel/chapel-4.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/chapel/chapel-5.jpg"
+        image: "images/gallery/chapel/chapel-5.webp"
       }
       
     ]
@@ -140,24 +140,40 @@ const serviceGalleries = {
     placeholder: "Our floral arrangements will be displayed here.",
     items: [
       {
-        title: "Main Viewing Chapel",
-        image: "images/gallery/flowers/flower-1.jpeg"
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-1.webp"
       },
       {
-        title: "Interior Chapel",
-        image: "images/gallery/flowers/flower-2.jpeg"
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-2.webp"
       },
       {
-        title: "Viewing Area",
-        image: "images/gallery/flowers/flower-3.jpeg"
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-3.webp"
       },
       {
-        title: "Viewing Area",
-        image: "images/gallery/flowers/flower-4.jpeg"
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-4.webp"
       },
       {
-        title: "Viewing Area",
-        image: "images/gallery/flowers/flower-5.jpeg"
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-5.webp"
+      },
+      {
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-6.webp"
+      },
+      {
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-7.webp"
+      },
+      {
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-8.webp"
+      },
+      {
+        title: "Flower Arrangements",
+        image: "images/gallery/flowers/flower-9.webp"
       }
     ]
   },
@@ -170,23 +186,23 @@ const serviceGalleries = {
     items: [
       {
         title: "Main Viewing Chapel",
-        image: "images/gallery/caskets/casket-1.jpg"
+        image: "images/gallery/caskets/casket-1.webp"
       },
       {
         title: "Interior Chapel",
-        image: "images/gallery/caskets/casket-2.jpg"
+        image: "images/gallery/caskets/casket-2.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/caskets/casket-3.jpg"
+        image: "images/gallery/caskets/casket-3.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/caskets/casket-4.jpg"
+        image: "images/gallery/caskets/casket-4.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/caskets/casket-5.jpg"
+        image: "images/gallery/caskets/casket-5.webp"
       }
     ]
   },
@@ -199,23 +215,23 @@ const serviceGalleries = {
     items: [
       {
         title: "Main Viewing Chapel",
-        image: "images/gallery/mortuary/chapel-1.png"
+        image: "images/gallery/mortuary/chapel-1.webp"
       },
       {
         title: "Interior Chapel",
-        image: "images/gallery/mortuary/chapel-2.png"
+        image: "images/gallery/mortuary/chapel-2.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/mortuary/chapel-3.png"
+        image: "images/gallery/mortuary/chapel-3.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/mortuary/chapel-4.png"
+        image: "images/gallery/mortuary/chapel-4.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/mortuary/chapel-5.jpeg"
+        image: "images/gallery/mortuary/chapel-5.webp"
       }
     ]
   },
@@ -228,23 +244,23 @@ const serviceGalleries = {
     items: [
       {
         title: "Main Viewing Chapel",
-        image: "images/gallery/coordination/chapel-1.png"
+        image: "images/gallery/coordination/chapel-1.webp"
       },
       {
         title: "Interior Chapel",
-        image: "images/gallery/coordination/chapel-2.png"
+        image: "images/gallery/coordination/chapel-2.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/coordination/chapel-3.png"
+        image: "images/gallery/coordination/chapel-3.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/coordination/chapel-4.png"
+        image: "images/gallery/coordination/chapel-4.webp"
       },
       {
         title: "Viewing Area",
-        image: "images/gallery/coordination/chapel-5.jpeg"
+        image: "images/gallery/coordination/chapel-5.webp"
       }
     ]
   }
@@ -312,6 +328,10 @@ function showCasketItem(index) {
   };
 
   casketGalleryImage.src = item.image;
+  [1, -1].forEach((d) => {
+    const neighbor = items[(currentCasketIndex + d + items.length) % items.length];
+    if (neighbor) new Image().src = neighbor.image;
+  });
 }
 
 function openCasketGallery(category) {
@@ -479,30 +499,25 @@ document.querySelectorAll(
    FLOATING SERVICES ARROW
 ===================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+{
   const servicesSection = document.querySelector("#services");
   const floatingArrow = document.querySelector(".hero__scroll");
 
-  if (!servicesSection || !floatingArrow) return;
+  if (servicesSection && floatingArrow) {
+    const updateArrowVisibility = () => {
+      const servicesTop = servicesSection.getBoundingClientRect().top;
 
-  const updateArrowVisibility = () => {
-  const servicesTop = servicesSection.getBoundingClientRect().top;
+      // Hide once the Services section reaches the screen (or is already above it)
+      floatingArrow.classList.toggle("is-hidden", servicesTop <= window.innerHeight);
+    };
 
-  // Hide as soon as the Services section enters the viewport
-  const hasReachedServices = servicesTop <= window.innerHeight;
-
-  floatingArrow.classList.toggle("is-hidden", hasReachedServices);
-  };
-
-    window.addEventListener("scroll", updateArrowVisibility, {
-      passive: true
-    });
-
+    window.addEventListener("scroll", updateArrowVisibility, { passive: true });
     window.addEventListener("resize", updateArrowVisibility);
 
-    // Set the correct state when loading the page
+    // Set the correct state when the page loads
     updateArrowVisibility();
-});
+  }
+}
 
 /* =====================================
    NAVIGATION SMOOTH SCROLL
@@ -804,3 +819,19 @@ document.getElementById("toastClose").addEventListener("click", () => {
     .classList.remove("is-visible");
 });
 })
+
+/* Load heavy background images only when they're near the screen */
+const lazyBgs = document.querySelectorAll(".service-panel, .credentials");
+if ("IntersectionObserver" in window) {
+  const bgObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("img-ready");
+        bgObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: "400px 0px" });
+  lazyBgs.forEach((el) => bgObserver.observe(el));
+} else {
+  lazyBgs.forEach((el) => el.classList.add("img-ready"));
+}

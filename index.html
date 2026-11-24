@@ -8,9 +8,21 @@
   <title>Marikina Serenity</title>
 
   <!-- Elegant editorial typography and responsive styling -->
-  <link rel="icon" type="image/png" href="images/serenity_logo_square.png">
+  <link rel="icon" type="image/png" href="images/favicon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/script.js" defer></script>
+
+  <link rel="canonical" href="https://YOUR-DOMAIN/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Serenity Chapel and Mortuary Care Services | Marikina City">
+  <meta property="og:description" content="Compassionate chapel, memorial and funeral arrangements in Marikina City.">
+  <meta property="og:url" content="https://marikina-serenity.netlify.app/>
+  <meta property="og:image" content="https://marikina-serenity.netlify.app/images/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="images/favicon-192.png">
 </head>
 <body>
   <!-- 00 | Direct assistance: enter verified phone details before launch. -->
@@ -25,8 +37,7 @@
   <header class="site-header" id="top">
     <div class="container header-shell">
       <a class="site-brand" href="#home" aria-label="Serenity homepage">
-        <img src="images/serenity_logo_cropped-removebg-preview.png" alt="Serenity Chapel and Mortuary Care Services logo" width="1012" height="282">
-      </a>
+        <img src="images/serenity_logo_cropped-removebg-preview.webp" alt="Serenity Chapel and Mortuary Care Services logo" width="500" height="139">
 
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href="#about">Our Promise</a>
@@ -51,6 +62,12 @@
     <!-- 01 | Cinematic hero: full-bleed photo + overlapping editorial title. -->
     <section class="hero" id="home" aria-labelledby="hero-title">
       <div class="hero__media" role="img" aria-label="Serenity chapel interior">
+        <img src="images/services/serenity_hero_natural_1600.webp"
+            srcset="images/services/serenity_hero_natural_800.webp 800w,
+                    images/services/serenity_hero_natural_1600.webp 1600w,
+                    images/services/serenity_hero_natural_2400.webp 2400w"
+            sizes="100vw" width="1600" height="900"
+            fetchpriority="high" decoding="async" alt="">
       </div>
       <div class="container hero__content-shell">
         <div class="hero__content">
@@ -352,7 +369,7 @@
     <div class="container">
       <div class="footer__upper">
         <div class="footer__brand">
-          <img src="images/serenity_logo_cropped-white.png" alt="Serenity Chapel and Mortuary Care Services" width="1012" height="282">
+          <img src="images/serenity_logo_cropped-white.webp" alt="Serenity Chapel and Mortuary Care Services" width="500" height="139" loading="lazy">
           <p>Thoughtful arrangements. Compassionate care. Meaningful remembrance.</p>
         </div>
         <nav class="footer__nav" aria-label="Footer navigation">
@@ -466,7 +483,7 @@
     <button type="button"
             class="credentials-modal__tab is-selected"
             data-doc-title="Business Registration"
-            data-doc-src="images/credentials/DTI.jpeg"
+            data-doc-src="images/credentials/DTI.webp"
             aria-pressed="true">
       Business Registration
     </button>
@@ -474,7 +491,7 @@
     <button type="button"
             class="credentials-modal__tab"
             data-doc-title="Business Permit"
-            data-doc-src="images/credentials/Mayor.jpeg"
+            data-doc-src="images/credentials/Mayor.webp"
             aria-pressed="false">
       Business Permit
     </button>
@@ -482,7 +499,7 @@
     <button type="button"
             class="credentials-modal__tab"
             data-doc-title="Other Documentation"
-            data-doc-src="images/credentials/Permit.jpeg"
+            data-doc-src="images/credentials/Permit.webp"
             aria-pressed="false">
       Other Documentation
     </button>

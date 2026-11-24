@@ -240,22 +240,11 @@ p {
   overflow: hidden;
 }
 
-.hero__media {
-  position: absolute;
-  inset: 0;
-  background-image: 
-   linear-gradient(
-    90deg,
-    rgba(10,31,48,0.35),
-    rgba(25,47,67,0.12) 64%,
-    rgba(23,49,75,0.08)
-   ),
-
-  url(../images/services/serenity_hero_natural_2x.jpg);
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+.hero__media { position: absolute; inset: 0; }
+.hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.hero__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(10,31,48,.35), rgba(25,47,67,.12) 64%, rgba(23,49,75,.08));
 }
 
 .image-placeholder {
@@ -633,7 +622,7 @@ p {
   height: 335px;
   border-radius: 170px 170px 5px 5px;
   background-image: linear-gradient(0deg,rgba(18,57,83,.13),transparent),
-  url('../images/services/Flowers.jpeg');
+  url('../images/services/Flowers.webp');
   background-position: center;
 }
 
@@ -730,24 +719,24 @@ p {
 }
 
 /* Each service gets its own photograph */
-.service-panel--chapel {
-  --panel-image: url("../images/services/54bc6c47-cd68-4738-ad5e-480031e753fc.png");
+.service-panel--chapel.img-ready{
+  --panel-image: url("../images/services/54bc6c47-cd68-4738-ad5e-480031e753fc.webp");
 }
 
-.service-panel--flowers {
-  --panel-image: url("../images/services/78c4243a-7b87-4112-9934-ee14c9c7383c.png");
+.service-panel--flowers.img-ready{
+  --panel-image: url("../images/services/78c4243a-7b87-4112-9934-ee14c9c7383c.webp");
 }
 
-.service-panel--caskets {
-  --panel-image: url("../images/services/0276c9a7-d2d1-4779-b655-da0050561386.png");
+.service-panel--caskets.img-ready{
+  --panel-image: url("../images/services/0276c9a7-d2d1-4779-b655-da0050561386.webp");
 }
 
-.service-panel--care {
-  --panel-image: url("../images/services/20270a59-b304-4961-a537-6e6418ae9b75.png");
+.service-panel--care.img-ready{
+  --panel-image: url("../images/services/20270a59-b304-4961-a537-6e6418ae9b75.webp");
 }
 
-.service-panel--coordination {
-  --panel-image: url("../images/services/Sunlit Chapel Memorial Interior.png");
+.service-panel--coordination.img-ready{
+  --panel-image: url("../images/services/Sunlit Chapel Memorial Interior.webp");
 }
 
 /* Expansion */
@@ -1593,8 +1582,7 @@ p {
       rgba(35, 63, 80, .94) 0%,
       rgba(52, 82, 100, .82) 45%,
       rgba(52, 82, 100, .45) 100%
-    ),
-    url("../images/services/Creds.jpeg");
+    );
 
   background-size: cover;
   background-position: center;
@@ -1603,6 +1591,17 @@ p {
   padding: 105px 0;
   border: 0;
   color: #fff;
+}
+
+.credentials.img-ready {
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(35, 63, 80, .94) 0%,
+      rgba(52, 82, 100, .82) 45%,
+      rgba(52, 82, 100, .45) 100%
+    ),
+    url("../images/services/Creds.webp");
 }
 
 .credentials__inner {
@@ -2196,13 +2195,14 @@ p {
 
 .casket-gallery__image-stage {
   width: min(100%, 1050px);
-  height: auto;
+  height: min(66vh, 640px);   /* same height for every photo */
 
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   min-height: 0;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   position: relative;
 }
@@ -2210,14 +2210,11 @@ p {
 .casket-gallery__image {
   display: block;
 
+  height: 100%;
   width: auto;
-  height: auto;
-
-  max-width: min(85vw, 1050px);
-  max-height: 68vh;
+  max-width: 100%;
 
   object-fit: contain;
-  object-position: center;
 
   opacity: 1;
   transition: opacity .3s ease;
