@@ -42,8 +42,11 @@
   <header class="site-header" id="top">
     <div class="container header-shell">
       <a class="site-brand" href="#home" aria-label="Serenity homepage">
-        <img src="images/serenity_logo_cropped-removebg-preview.webp" alt="Serenity Chapel and Mortuary Care Services logo" width="500" height="139">
-
+        <img src="images/serenity_logo_cropped-removebg-preview-528.webp"
+          srcset="images/serenity_logo_cropped-removebg-preview-264.webp 264w,
+                  images/serenity_logo_cropped-removebg-preview-528.webp 528w"
+          sizes="264px" width="528" height="147"
+          alt="Serenity Chapel and Mortuary Care Services logo">
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href="#about">Our Promise</a>
         <a href="#services">Services</a>
@@ -67,12 +70,27 @@
     <!-- 01 | Cinematic hero: full-bleed photo + overlapping editorial title. -->
     <section class="hero" id="home" aria-labelledby="hero-title">
       <div class="hero__media" role="img" aria-label="Serenity chapel interior">
-        <img src="images/services/serenity_hero_natural_1600.webp"
-            srcset="images/services/serenity_hero_natural_800.webp 800w,
-                    images/services/serenity_hero_natural_1600.webp 1600w,
-                    images/services/serenity_hero_natural_2400.webp 2400w"
-            sizes="100vw" width="1600" height="900"
-            fetchpriority="high" decoding="async" alt="">
+        <picture>
+          <!-- Phones: portrait crop -->
+          <source media="(max-width: 760px)" type="image/avif"
+                  srcset="images/services/serenity_hero_mobile.avif">
+          <source media="(max-width: 760px)" type="image/webp"
+                  srcset="images/services/serenity_hero_mobile.webp">
+          <!-- Everything else: wide image, AVIF first -->
+          <source type="image/avif" sizes="100vw"
+                  srcset="images/services/serenity_hero_natural_800.avif 800w,
+                          images/services/serenity_hero_natural_1200.avif 1200w,
+                          images/services/serenity_hero_natural_1600.avif 1600w,
+                          images/services/serenity_hero_natural_2400.avif 2400w">
+          <source type="image/webp" sizes="100vw"
+                  srcset="images/services/serenity_hero_natural_800.webp 800w,
+                          images/services/serenity_hero_natural_1200.webp 1200w,
+                          images/services/serenity_hero_natural_1600.webp 1600w,
+                          images/services/serenity_hero_natural_2400.webp 2400w">
+          <img src="images/services/serenity_hero_natural_1600.webp"
+              width="1600" height="1070"
+              fetchpriority="high" decoding="async" alt="">
+        </picture>
       </div>
       <div class="container hero__content-shell">
         <div class="hero__content">
@@ -374,8 +392,12 @@
     <div class="container">
       <div class="footer__upper">
         <div class="footer__brand">
-          <img src="images/serenity_logo_cropped-white.webp" alt="Serenity Chapel and Mortuary Care Services" width="500" height="139" loading="lazy">
-          <p>Thoughtful arrangements. Compassionate care. Meaningful remembrance.</p>
+          <img src="images/serenity_logo_cropped-white-400.webp"
+              srcset="images/serenity_logo_cropped-white-200.webp 200w,
+                      images/serenity_logo_cropped-white-400.webp 400w"
+              sizes="200px" width="400" height="111" loading="lazy"
+              alt="Serenity Chapel and Mortuary Care Services">          
+     <p>Thoughtful arrangements. Compassionate care. Meaningful remembrance.</p>
         </div>
         <nav class="footer__nav" aria-label="Footer navigation">
           <a href="#services">Services</a>
