@@ -2729,3 +2729,11 @@ p {
 }
 
 /* Credentials modal: center the loader over the document preview */
+.credentials-modal__preview {
+  position: relative;
+}
+
+#credentialsLoader .casket-gallery__spinner {
+  position: relative;
+  top: 12%;
+}
