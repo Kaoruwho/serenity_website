@@ -88,6 +88,9 @@ const casketGalleryEyebrow = document.getElementById(
 const casketGalleryPlaceholderText = document.getElementById(
   "casketGalleryPlaceholderText"
 );
+const casketGalleryLoader = document.getElementById(
+  "casketGalleryLoader"
+);
 const casketGalleryCounter = document.getElementById(
   "casketGalleryCounter"
 );
@@ -270,23 +273,42 @@ let activeGallery = null;
 let currentCasketIndex = 0;
 let galleryCloseTimer = null;
 
+const SPINNER_DELAY = 120; // ms to wait before showing the spinner when a photo is already on screen
+let spinnerTimer = null;
+
+function setGalleryLoading(isLoading) {
+  clearTimeout(spinnerTimer);
+
+  if (!isLoading) {
+    casketGalleryLoader.hidden = true;
+    casketGalleryImage.classList.remove("is-loading");
+    return;
+  }
+
+  // Nothing on screen yet? Show the spinner straight away.
+  const delay = casketGalleryImage.hidden ? 0 : SPINNER_DELAY;
+
+  spinnerTimer = setTimeout(() => {
+    casketGalleryLoader.hidden = false;
+    casketGalleryImage.classList.add("is-loading");
+  }, delay);
+}
+
 function showCasketItem(index) {
   if (!activeGallery) return;
 
   const items = activeGallery.items;
 
   if (items.length === 0) {
+    setGalleryLoading(false);
+    casketGalleryImage.dataset.pending = "";
     casketGalleryImage.hidden = true;
     casketGalleryImage.removeAttribute("src");
 
     casketGalleryPlaceholder.hidden = false;
+    casketGalleryPlaceholderText.textContent = activeGallery.placeholder;
 
-    casketGalleryPlaceholderText.textContent =
-      activeGallery.placeholder;
-
-    casketGalleryTitle.textContent =
-      activeGallery.title;
-
+    casketGalleryTitle.textContent = activeGallery.title;
     casketGalleryCounter.textContent = "0 / 0";
 
     casketGalleryPrev.disabled = true;
@@ -295,8 +317,7 @@ function showCasketItem(index) {
     return;
   }
 
-  currentCasketIndex =
-    (index + items.length) % items.length;
+  currentCasketIndex = (index + items.length) % items.length;
 
   const item = items[currentCasketIndex];
 
@@ -308,30 +329,42 @@ function showCasketItem(index) {
   casketGalleryPrev.disabled = items.length <= 1;
   casketGalleryNext.disabled = items.length <= 1;
 
-  casketGalleryImage.hidden = true;
-  casketGalleryPlaceholder.hidden = false;
+  // Spinner while loading; the current photo stays on screen until the new one is ready
+  casketGalleryPlaceholder.hidden = true;
+  setGalleryLoading(true);
 
-  casketGalleryPlaceholderText.textContent =
-    activeGallery.placeholder;
+  const requestedSrc = item.image;
+  casketGalleryImage.dataset.pending = requestedSrc;
 
-  casketGalleryImage.onload = () => {
+  const loader = new Image();
+  loader.fetchPriority = "high";
+
+  loader.onload = () => {
+    if (casketGalleryImage.dataset.pending !== requestedSrc) return; // user already moved on
+
+    casketGalleryImage.src = requestedSrc;
+    casketGalleryImage.alt = item.title;
     casketGalleryImage.hidden = false;
-    casketGalleryPlaceholder.hidden = true;
+    setGalleryLoading(false);
+
+    // Quietly load the neighbouring photos (uses the warmImage helper from earlier)
+    if (typeof warmImage === "function") {
+      warmImage(items[(currentCasketIndex + 1) % items.length].image);
+      warmImage(items[(currentCasketIndex - 1 + items.length) % items.length].image);
+    }
   };
 
-  casketGalleryImage.onerror = () => {
+  loader.onerror = () => {
+    if (casketGalleryImage.dataset.pending !== requestedSrc) return;
+
+    setGalleryLoading(false);
     casketGalleryImage.hidden = true;
     casketGalleryPlaceholder.hidden = false;
-
     casketGalleryPlaceholderText.textContent =
       "This photograph is currently unavailable.";
   };
 
-  casketGalleryImage.src = item.image;
-  [1, -1].forEach((d) => {
-    const neighbor = items[(currentCasketIndex + d + items.length) % items.length];
-    if (neighbor) new Image().src = neighbor.image;
-  });
+loader.src = requestedSrc;
 }
 
 function openCasketGallery(category) {
@@ -348,12 +381,13 @@ function openCasketGallery(category) {
 
   inquiryLink.dataset.service = activeGallery.service;
 
-  showCasketItem(0);
+  // Start each gallery clean so the previous gallery's last photo never shows
+  setGalleryLoading(false);
+  casketGalleryImage.hidden = true;
+  casketGalleryImage.removeAttribute("src");
+  casketGalleryPlaceholder.hidden = true;
 
-  // Reset any previous closing animation.
-  clearTimeout(galleryCloseTimer);
-  galleryCloseTimer = null;
-  casketGallery.classList.remove("is-closing");
+  showCasketItem(0);
 
   casketGallery.showModal();
 }
@@ -528,8 +562,10 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
       !targetId.startsWith("#")
     ) return;
 
-    if (!target) return;
+    const target = document.querySelector(targetId);
 
+    if (!target) return;
+    
     event.preventDefault();
 
     const sectionTop =
@@ -811,7 +847,6 @@ document.getElementById("toastClose").addEventListener("click", () => {
   document.getElementById("inquiryToast")
     .classList.remove("is-visible");
 });
-})
 
 /* Load heavy background images only when they're near the screen */
 const lazyBgs = document.querySelectorAll(".service-panel, .credentials");
@@ -828,3 +863,4 @@ if ("IntersectionObserver" in window) {
 } else {
   lazyBgs.forEach((el) => el.classList.add("img-ready"));
 }
+})
