@@ -2727,3 +2727,5 @@ p {
   0%, 100% { opacity: .35; }
   50%      { opacity: 1; }
 }
+
+/* Credentials modal: center the loader over the document preview */
