@@ -550,8 +550,7 @@ document.querySelectorAll(
    NAVIGATION SMOOTH SCROLL
 ===================================== */
 
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => {
+document.querySelectorAll('a[href^="#"]:not(#openCredentials)').forEach((link) => {  link.addEventListener("click", (event) => {
     const targetId = link.getAttribute("href");
 
     if (!targetId || targetId === "#") return;
@@ -565,7 +564,7 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
     const target = document.querySelector(targetId);
 
     if (!target) return;
-    
+
     event.preventDefault();
 
     const sectionTop =
@@ -674,6 +673,10 @@ if (inquiryForm && inquiryStatus) {
     "credentialsPlaceholder"
   );
 
+  const loader = document.getElementById("credentialsLoader");
+  const setLoader = (show) => {
+    if (loader) loader.hidden = !show;
+  };
   const counter = document.getElementById("credentialsCounter");
   const previousButton = document.getElementById("credentialsPrev");
   const nextButton = document.getElementById("credentialsNext");
@@ -687,7 +690,7 @@ if (inquiryForm && inquiryStatus) {
 
   let currentIndex = 0;
 
-  function showDocument(index) {
+    function showDocument(index) {
     currentIndex = (index + tabs.length) % tabs.length;
 
     const selectedTab = tabs[currentIndex];
@@ -703,47 +706,59 @@ if (inquiryForm && inquiryStatus) {
 
     counter.textContent = `${currentIndex + 1} / ${tabs.length}`;
 
-    // Reset preview before loading another document.
+    // Reset everything before loading another document.
+    documentImage.onload = null;
+    documentImage.onerror = null;
     documentImage.hidden = true;
     documentImage.removeAttribute("src");
     documentImage.alt = title;
 
-    placeholder.hidden = false;
-    placeholder.querySelector("p").textContent =
-      "Document preview not yet available.";
+    loader.hidden = true;
+    placeholder.hidden = true;
 
     originalLink.hidden = true;
     originalLink.removeAttribute("href");
 
-    if (!source) return;
-
-    // Display image-based documents.
-    documentImage.onload = () => {
-      documentImage.hidden = false;
-      placeholder.hidden = true;
-    };
-
-    documentImage.onerror = () => {
-      documentImage.hidden = true;
+    // No file set for this tab.
+    if (!source) {
       placeholder.hidden = false;
       placeholder.querySelector("p").textContent =
-        "Unable to load the document preview.";
-    };
+        "Document preview not yet available.";
+      return;
+    }
 
     originalLink.href = source;
     originalLink.hidden = false;
 
     // PDFs open in a new tab instead of being shown as images.
     if (source.toLowerCase().split("?")[0].endsWith(".pdf")) {
+      placeholder.hidden = false;
       placeholder.querySelector("p").textContent =
         "PDF document — select Open Original to view it.";
       return;
     }
 
+    // Image document: show the spinner until it loads.
+    loader.hidden = false;
+
+    documentImage.onload = () => {
+      loader.hidden = true;
+      documentImage.hidden = false;
+    };
+
+    documentImage.onerror = () => {
+      loader.hidden = true;
+      documentImage.hidden = true;
+      placeholder.hidden = false;
+      placeholder.querySelector("p").textContent =
+        "Unable to load the document preview.";
+    };
+
     documentImage.src = source;
   }
 
-  openButton.addEventListener("click", () => {
+    openButton.addEventListener("click", (event) => {
+    event.preventDefault();
     showDocument(0);
     modal.showModal();
   });
