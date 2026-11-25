@@ -226,11 +226,6 @@
           <h2 id="credentials-title">
             Care grounded in trust.
           </h2>
-
-          <p>
-            View Serenity's available business and
-            government documentation.
-          </p>
         </div>
 
         <div class="credentials__action">
@@ -323,9 +318,6 @@
         <div class="contact__inquiry">
           <p class="eyebrow">Prefer to write?</p>
           <h3>Send an inquiry</h3>
-          <p>Share your contact details and a brief message.
-             Our team can follow up to discuss your inquiry.</p>
-          <!-- Not connected yet; disabled submit prevents misleading users. -->
           <form class="inquiry-form" id="inquiryForm" action="https://api.web3forms.com/submit" method="POST">
                 <!-- Web3Forms configuration -->
                 <input
@@ -378,7 +370,6 @@
               <label for="inquiryMessage">Message (optional)</label>
               <textarea id="inquiryMessage" name="message" rows="4" placeholder="How may we assist you?"></textarea>
             </div>
-            <p class="form-note">Please avoid sharing sensitive personal or medical information through this form.</p>
             <button class="button button--primary" type="submit">Send Inquiry <span aria-hidden="true">↗</span></button>
             <p class="form-status" id="inquiryStatus" role="status" aria-live="polite"></p>
           </form>
@@ -449,6 +440,11 @@
             id="casketGalleryImage"
             alt=""
             hidden>
+        
+        <div class="casket-gallery__loader" id="casketGalleryLoader"
+            role="status" aria-label="Loading photograph" hidden>
+          <span class="casket-gallery__spinner" aria-hidden="true"></span>
+        </div>
 
       </div>
 
@@ -458,6 +454,7 @@
           SERENITY / CASKET COLLECTION
         </p>
 
+        
         <h2 id="casketGalleryTitle">Our Casket Collection</h2>
 
         <span class="casket-gallery__counter"
