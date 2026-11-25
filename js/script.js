@@ -365,6 +365,7 @@ function showCasketItem(index) {
   };
 
 loader.src = requestedSrc;
+}
 
 function openCasketGallery(category) {
   activeGallery = serviceGalleries[category];
@@ -561,8 +562,10 @@ document.querySelectorAll('a[href^="#"]').forEach((link) => {
       !targetId.startsWith("#")
     ) return;
 
-    if (!target) return;
+    const target = document.querySelector(targetId);
 
+    if (!target) return;
+    
     event.preventDefault();
 
     const sectionTop =
@@ -844,7 +847,6 @@ document.getElementById("toastClose").addEventListener("click", () => {
   document.getElementById("inquiryToast")
     .classList.remove("is-visible");
 });
-}
 
 /* Load heavy background images only when they're near the screen */
 const lazyBgs = document.querySelectorAll(".service-panel, .credentials");
