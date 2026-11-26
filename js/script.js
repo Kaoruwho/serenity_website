@@ -320,6 +320,19 @@ let activeGallery = null;
 let currentCasketIndex = 0;
 let galleryCloseTimer = null;
 
+const warmedImages = new Map();
+
+function warmImage(src) {
+  if (!src || warmedImages.has(src)) return;
+
+  const img = new Image();
+  img.decoding = "async";
+  img.fetchPriority = "low";   // never compete with the photo being viewed
+  img.src = src;
+
+  warmedImages.set(src, img);  // keep a reference so the browser doesn't drop it
+}
+
 const SPINNER_DELAY = 120; // ms to wait before showing the spinner when a photo is already on screen
 let spinnerTimer = null;
 
