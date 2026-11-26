@@ -1,11 +1,58 @@
 'use strict';
 // Navigation stays usable without JS thanks to native <details>.
 document.addEventListener('DOMContentLoaded', () => {
-  const menu = document.querySelector('.mobile-navigation');
+    const menu = document.querySelector('.mobile-navigation');
   if (menu) {
-    menu.querySelectorAll('nav a').forEach(link => link.addEventListener('click', () => { menu.open = false; }));
-    document.addEventListener('keydown', event => { if (event.key === 'Escape') menu.open = false; });
-    document.addEventListener('click', event => { if (menu.open && !menu.contains(event.target)) menu.open = false; });
+    const nav = menu.querySelector('nav');
+    const summary = menu.querySelector('summary');
+    let closing = false;
+
+    const closeMenu = () => {
+      if (!menu.open || closing) return;
+
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!nav || reduceMotion) { menu.open = false; return; }
+
+      closing = true;
+      menu.classList.add('is-closing');
+
+      // Restart the animation so the reversed version plays from the start
+      nav.style.animation = 'none';
+      void nav.offsetHeight;
+      nav.style.animation = '';
+
+      const finish = () => {
+        if (!closing) return;
+        closing = false;
+        menu.open = false;
+        menu.classList.remove('is-closing');
+      };
+
+      nav.addEventListener('animationend', finish, { once: true });
+      setTimeout(finish, 400); // safety net in case animationend never fires
+    };
+
+    menu.querySelectorAll('nav a').forEach(link => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
+    document.addEventListener('click', event => { if (menu.open && !menu.contains(event.target)) closeMenu(); });
+
+    if (summary) {
+      summary.addEventListener('click', (event) => {
+        // Open: replay the reveal animation on every open
+        if (!menu.open) {
+          requestAnimationFrame(() => {
+            if (!nav) return;
+            nav.style.animation = 'none';
+            void nav.offsetHeight;
+            nav.style.animation = '';
+          });
+          return;
+        }
+        // Close: stop the instant close and animate it instead
+        event.preventDefault();
+        closeMenu();
+      });
+    }
   }
 
   const year = document.getElementById('copyright-year');
@@ -856,11 +903,32 @@ function showInquiryToast(type, title, message) {
   }, 5000);
 }
 
-document.getElementById("toastClose").addEventListener("click", () => {
+function hideInquiryToast() {
   clearTimeout(toastTimer);
 
   document.getElementById("inquiryToast")
     .classList.remove("is-visible");
+}
+
+// Close button.
+document.getElementById("toastClose")
+  .addEventListener("click", hideInquiryToast);
+
+// Click anywhere outside the notification.
+document.addEventListener("click", (event) => {
+  const toast = document.getElementById("inquiryToast");
+
+  if (
+    toast.classList.contains("is-visible") &&
+    !toast.contains(event.target)
+  ) {
+    hideInquiryToast();
+  }
+});
+
+// Escape key, same as the other popups.
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") hideInquiryToast();
 });
 
 /* Load heavy background images only when they're near the screen */
