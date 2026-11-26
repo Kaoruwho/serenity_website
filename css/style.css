@@ -2737,3 +2737,9 @@ p {
   position: relative;
   top: 12%;
 }
+
+#credentialsLoader .casket-gallery__spinner {
+  background: #fff;                      /* the filled circle */
+  border-color: rgba(0, 0, 0, 0.12);     /* the faint ring */
+  border-top-color: #4f7d96;             /* the moving arc */
+}
